@@ -13,7 +13,7 @@
 
     <script>
         // Configuração do broker MQTT
-        const broker = "wss://8b9f05e78eb94bc58f7a4ba70175b148.s1.eu.hivemq.cloud:8884/mqtt";
+        const broker = "wss://8b9f05e78eb94bc58f7a4ba70175b148.s1.eu.hivemq.cloud:8884/mqtt";  // WebSockets TLS (porta 8884)
         const options = {
             username: "SiteGit",  // Seu usuário MQTT
             password: "R32279125w",  // Sua senha MQTT
@@ -25,6 +25,18 @@
 
         client.on("connect", () => {
             console.log("Conectado ao MQTT!");
+        });
+
+        client.on("error", (error) => {
+            console.error("Erro na conexão:", error);
+        });
+
+        client.on("close", () => {
+            console.log("Conexão fechada");
+        });
+
+        client.on("offline", () => {
+            console.log("Cliente offline");
         });
 
         function sendCommand(command) {
