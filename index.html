@@ -40,7 +40,7 @@
         });
 
         function sendCommand(command) {
-            client.publish("control-led", command);
+            client.publish("relay", command);
             console.log("Comando enviado:", command);
         }
     </script>
