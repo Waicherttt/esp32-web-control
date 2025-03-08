@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle do ESP32 via MQTT</title>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+    <h1>Controle do ESP32 via MQTT</h1>
+    <button onclick="sendCommand('on')">Ligar</button>
+    <button onclick="sendCommand('off')">Desligar</button>
+
+    <script>
+        const broker = "wss://broker.hivemq.com:8000/mqtt";  // Broker MQTT via WebSockets
+        const client = mqtt.connect(broker);
+
+        client.on("connect", () => {
+            console.log("Conectado ao MQTT!");
+        });
+
+        function sendCommand(command) {
+            client.publish("meu/esp32/controle", command);
+            console.log("Comando enviado:", command);
+        }
+    </script>
+</body>
+</html>
