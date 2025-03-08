@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle do ESP32 via MQTT</title>
+    <title>Controle do Relé via MQTT</title>
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
-    <h1>Controle do ESP32 via MQTT</h1>
-    <button onclick="sendCommand('on')">Ligar</button>
-    <button onclick="sendCommand('off')">Desligar</button>
+    <h1>Controle do Relé via MQTT</h1>
+    <button onclick="sendCommand('1')">Ligar Relé</button>
+    <button onclick="sendCommand('0')">Desligar Relé</button>
 
     <script>
-        const broker = "wss://broker.hivemq.com:8000/mqtt";  // Broker MQTT via WebSockets
-        const client = mqtt.connect(broker);
+        // Configuração do broker MQTT
+        const broker = "wss://8b9f05e78eb94bc58f7a4ba70175b148.s1.eu.hivemq.cloud:8884/mqtt";  // WebSockets TLS (porta 8884)
+        const options = {
+            username: "SiteGit",  // Seu usuário MQTT
+            password: "R32279125w",  // Sua senha MQTT
+            reconnectPeriod: 5000  // Tenta reconectar a cada 5s
+        };
+
+        // Conectar ao broker
+        const client = mqtt.connect(broker, options);
 
         client.on("connect", () => {
             console.log("Conectado ao MQTT!");
         });
 
         function sendCommand(command) {
-            client.publish("meu/esp32/controle", command);
+            client.publish("control-led", command);
             console.log("Comando enviado:", command);
         }
     </script>
