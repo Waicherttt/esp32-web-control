@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle do Relé via MQTT</title>
+    <title>Controle do Relé e LED via MQTT</title>
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 </head>
 <body>
-    <h1>Controle do Relé via MQTT</h1>
-    <button onclick="sendCommand('1')">Ligar Relé</button>
-    <button onclick="sendCommand('0')">Desligar Relé</button>
+    <h1>Controle do Relé e LED via MQTT</h1>
+
+    <h2>Controle do Relé</h2>
+    <button onclick="sendRelayCommand('1')">Ligar Relé</button>
+    <button onclick="sendRelayCommand('0')">Desligar Relé</button>
+
+    <h2>Controle do LED</h2>
+    <button onclick="sendLedCommand('1')">Ligar LED</button>
+    <button onclick="sendLedCommand('0')">Desligar LED</button>
 
     <script>
         // Configuração do broker MQTT
@@ -39,9 +45,16 @@
             console.log("Cliente offline");
         });
 
-        function sendCommand(command) {
+        // Função para controlar o Relé
+        function sendRelayCommand(command) {
             client.publish("relay", command);
-            console.log("Comando enviado:", command);
+            console.log("Comando enviado para o Relé:", command);
+        }
+
+        // Função para controlar o LED
+        function sendLedCommand(command) {
+            client.publish("led", command);
+            console.log("Comando enviado para o LED:", command);
         }
     </script>
 </body>
